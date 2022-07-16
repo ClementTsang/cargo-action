@@ -1,0 +1,74 @@
+name: cargo action
+author: Clement Tsang
+description: Invoke cargo/cross and commands.
+branding:
+  icon: box
+  color: blue
+
+inputs:
+  command:
+    description: The `cargo` command to run (e.g. `build`, `test`).
+    required: true
+
+  toolchain:
+    description: The toolchain to use. Do not include the `+` sign (e.g. `nightly`, `beta`). Defaults to stable.
+    required: false
+    default: ""
+
+  args:
+    description: What arguments to pass to the cargo/cross command.
+    required: false
+    default: ""
+
+  use-cross:
+    description: Whether to use cross instead of using cargo. If enabled, cross will automatically be installed if needed.
+    required: false
+    default: "false"
+
+  cross-version:
+    description: >
+      The cross version to use. Only used if `use-cross` is enabled. If not set, defaults to the newest stable
+      version of cross.
+    required: false
+    default: ""
+
+  directory:
+    description: >
+      Change to the specified directory prior to execution. Useful if your repo's base folder does not contain your
+      Rust project.
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Handle inputs.
+      id: set-flags
+      shell: bash
+      run: |
+        if [[ ${{inputs.use-cross}} == false ]]; then
+          echo "::set-output name=invoker::cargo";
+        else
+          echo "::set-output name=invoker::cross";
+        fi
+
+        if [[ -n "${{inputs.toolchain}}" ]]; then
+          echo "::set-output name=toolchain::+${{inputs.toolchain}}";
+        fi
+
+    - name: Install cross if required.
+      shell: bash
+      if: inputs.use-cross == 'true'
+      run: |
+        if [[ -n "${{inputs.cross-version}}" ]]; then
+          CROSS_VERSION_ARG="--version=${{inputs.cross-version}}";
+        fi
+        cargo install cross --locked ${CROSS_VERSION_ARG};
+
+    - name: Execute the cargo/cross command.
+      shell: bash
+      run: |
+        if [[ -n "${{inputs.directory}}" ]]; then
+          cd ${{inputs.directory}};
+        fi
+        ${{ steps.set-flags.outputs.invoker }} ${{ steps.set-flags.outputs.toolchain }} ${{inputs.command}} ${{inputs.args}};

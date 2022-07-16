@@ -1,0 +1,103 @@
+name: "Test"
+
+on:
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+  push:
+    branches: [main]
+
+jobs:
+  test-stable:
+    name: "Test stable toolchain"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Rust toolchain
+        if: matrix.info.container == ''
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+
+      - name: Enable Rust cache
+        uses: Swatinem/rust-cache@cb2cf0cc7c5198d3364b9630e2c3d457f160790c # 1.4.0
+
+      - name: Test simple
+        uses: ./
+        with:
+          command: build
+          directory: test/hello_world
+
+      - name: Test args
+        uses: ./
+        with:
+          command: build
+          args: --release
+          directory: test/hello_world
+
+  test-nightly:
+    name: "Test nightly toolchain"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Rust toolchain
+        if: matrix.info.container == ''
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: nightly
+
+      - name: Enable Rust cache
+        uses: Swatinem/rust-cache@cb2cf0cc7c5198d3364b9630e2c3d457f160790c # 1.4.0
+
+      - name: Test simple
+        uses: ./
+        with:
+          toolchain: nightly
+          command: build
+          directory: test/hello_world
+
+      - name: Test args
+        uses: ./
+        with:
+          toolchain: nightly
+          command: build
+          args: --release
+          directory: test/hello_world
+
+  test-cross:
+    name: "Test using cross"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Rust toolchain
+        if: matrix.info.container == ''
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+          target: aarch64-unknown-linux-gnu
+
+      - name: Enable Rust cache
+        uses: Swatinem/rust-cache@cb2cf0cc7c5198d3364b9630e2c3d457f160790c # 1.4.0
+
+      - name: Test simple
+        uses: ./
+        with:
+          command: build
+          use-cross: true
+          cross-version: 0.2.4
+          directory: test/hello_world
+
+      - name: Test args
+        uses: ./
+        with:
+          command: build
+          args: --release
+          use-cross: true
+          cross-version: 0.2.4
+          directory: test/hello_world
