@@ -23,6 +23,9 @@ jobs:
 
       - name: Enable Rust cache
         uses: Swatinem/rust-cache@cb2cf0cc7c5198d3364b9630e2c3d457f160790c # 1.4.0
+        with:
+          cache-on-failure: true
+          working-directory: test/hello_world
 
       - name: Test simple
         uses: ./
@@ -52,6 +55,9 @@ jobs:
 
       - name: Enable Rust cache
         uses: Swatinem/rust-cache@cb2cf0cc7c5198d3364b9630e2c3d457f160790c # 1.4.0
+        with:
+          cache-on-failure: true
+          working-directory: test/hello_world
 
       - name: Test simple
         uses: ./
@@ -84,20 +90,24 @@ jobs:
 
       - name: Enable Rust cache
         uses: Swatinem/rust-cache@cb2cf0cc7c5198d3364b9630e2c3d457f160790c # 1.4.0
-
-      - name: Test simple
-        uses: ./
         with:
-          command: build
-          use-cross: true
-          cross-version: 0.2.4
-          directory: test/hello_world
+          cache-on-failure: true
+          working-directory: test/hello_world
 
       - name: Test args
         uses: ./
         with:
           command: build
-          args: --release
+          args: --target aarch64-unknown-linux-gnu
+          use-cross: true
+          cross-version: 0.2.4
+          directory: test/hello_world
+
+      - name: Test persisting install
+        uses: ./
+        with:
+          command: build
+          args: --release --target aarch64-unknown-linux-gnu
           use-cross: true
           cross-version: 0.2.4
           directory: test/hello_world
