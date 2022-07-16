@@ -46,6 +46,7 @@ runs:
       id: set-flags
       shell: bash
       run: |
+        # Assign inputs to variables if needed
         if [[ ${{inputs.use-cross}} == false ]]; then
           echo "::set-output name=invoker::cargo";
         else
@@ -60,6 +61,7 @@ runs:
       shell: bash
       if: inputs.use-cross == 'true'
       run: |
+        # Install cross
         if [[ -n "${{inputs.cross-version}}" ]]; then
           CROSS_VERSION_ARG="--version=${{inputs.cross-version}}";
         fi
@@ -68,6 +70,7 @@ runs:
     - name: Execute the cargo/cross command.
       shell: bash
       run: |
+        # Execute cargo/cross command
         if [[ -n "${{inputs.directory}}" ]]; then
           cd ${{inputs.directory}};
         fi
