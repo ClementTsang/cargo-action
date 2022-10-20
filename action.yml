@@ -48,13 +48,13 @@ runs:
       run: |
         # Assign inputs to variables if needed
         if [[ ${{inputs.use-cross}} == false ]]; then
-          echo "::set-output name=invoker::cargo";
+          echo "invoker=cargo" >> $GITHUB_OUTPUT;
         else
-          echo "::set-output name=invoker::cross";
+          echo "invoker=cross" >> $GITHUB_OUTPUT;
         fi
 
         if [[ -n "${{inputs.toolchain}}" ]]; then
-          echo "::set-output name=toolchain::+${{inputs.toolchain}}";
+          echo "toolchain=+${{inputs.toolchain}}" >> $GITHUB_OUTPUT;
         fi
 
     - name: Install cross if required.
