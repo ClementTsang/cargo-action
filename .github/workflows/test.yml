@@ -25,7 +25,7 @@ jobs:
         uses: Swatinem/rust-cache@22c9328bcba27aa81a32b1bef27c7e3c78052531 # 2.0.1
         with:
           cache-on-failure: true
-          working-directory: test/hello_world
+          workspaces: "./test/hello_world -> target"
 
       - name: Test simple
         uses: ./
@@ -57,7 +57,7 @@ jobs:
         uses: Swatinem/rust-cache@22c9328bcba27aa81a32b1bef27c7e3c78052531 # 2.0.1
         with:
           cache-on-failure: true
-          working-directory: test/hello_world
+          workspaces: "./test/hello_world -> target"
 
       - name: Test simple
         uses: ./
@@ -92,7 +92,7 @@ jobs:
         uses: Swatinem/rust-cache@22c9328bcba27aa81a32b1bef27c7e3c78052531 # 2.0.1
         with:
           cache-on-failure: true
-          working-directory: test/hello_world
+          workspaces: "./test/hello_world -> target"
 
       - name: Test args
         uses: ./
