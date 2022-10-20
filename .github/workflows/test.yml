@@ -22,7 +22,7 @@ jobs:
           toolchain: stable
 
       - name: Enable Rust cache
-        uses: Swatinem/rust-cache@cb2cf0cc7c5198d3364b9630e2c3d457f160790c # 1.4.0
+        uses: Swatinem/rust-cache@22c9328bcba27aa81a32b1bef27c7e3c78052531 # 2.0.1
         with:
           cache-on-failure: true
           working-directory: test/hello_world
@@ -54,7 +54,7 @@ jobs:
           toolchain: nightly
 
       - name: Enable Rust cache
-        uses: Swatinem/rust-cache@cb2cf0cc7c5198d3364b9630e2c3d457f160790c # 1.4.0
+        uses: Swatinem/rust-cache@22c9328bcba27aa81a32b1bef27c7e3c78052531 # 2.0.1
         with:
           cache-on-failure: true
           working-directory: test/hello_world
@@ -89,7 +89,7 @@ jobs:
           target: aarch64-unknown-linux-gnu
 
       - name: Enable Rust cache
-        uses: Swatinem/rust-cache@cb2cf0cc7c5198d3364b9630e2c3d457f160790c # 1.4.0
+        uses: Swatinem/rust-cache@22c9328bcba27aa81a32b1bef27c7e3c78052531 # 2.0.1
         with:
           cache-on-failure: true
           working-directory: test/hello_world
