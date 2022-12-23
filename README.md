@@ -30,7 +30,7 @@ jobs:
   steps:
     - uses: actions/checkout@v3
     - uses: dtolnay/rust-toolchain@stable
-    - uses: ClementTsang/cargo-action@v0.0.2
+    - uses: ClementTsang/cargo-action@v0.0.3
       with:
         command: test
         args: --lib --bins --benches
