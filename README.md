@@ -5,7 +5,11 @@ with dtolnay's [rust-toolchain](https://github.com/dtolnay/rust-toolchain) as re
 
 Written for use in personal projects (i.e. [bottom](https://github.com/ClementTsang/bottom)), though feel free to use it on your own. Big fat disclaimer though that it may or may not work for your use case - if that's the case, I'm open to issue reports and PRs.
 
-## Inputs
+## Usage
+
+Note - this action does not install Rust for you, you will want to install a toolchain prior to running this (e.g. [`dtolnay/rust-toolchain@stable`](https://github.com/dtolnay/rust-toolchain)).
+
+### Inputs
 
 **Note: Inputs aren't necessarily checked to be valid!**
 
