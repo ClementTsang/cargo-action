@@ -11,7 +11,7 @@ Note - this action does not install Rust for you, you will want to install a too
 
 ### Inputs
 
-**Note: Inputs aren't necessarily checked to be valid!**
+**Note: Inputs aren't necessarily checked to be valid by this action!**
 
 | Name            | Description                                                                                                                 |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------- |
