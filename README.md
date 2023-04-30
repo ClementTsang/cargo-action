@@ -7,7 +7,7 @@ Written for use in personal projects (i.e. [bottom](https://github.com/ClementTs
 
 ## Usage
 
-Note - this action does not install Rust for you, you will want to install a toolchain prior to running this (e.g. [`dtolnay/rust-toolchain@stable`](https://github.com/dtolnay/rust-toolchain)).
+Note - this action does not install Rust for you, you will want to install a toolchain prior to running this (e.g. [`dtolnay/rust-toolchain`](https://github.com/dtolnay/rust-toolchain)).
 
 ### Inputs
 
