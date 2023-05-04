@@ -74,4 +74,4 @@ runs:
         if [[ -n "${{inputs.directory}}" ]]; then
           cd ${{inputs.directory}};
         fi
-        ${{ steps.set-flags.outputs.invoker }} ${{ steps.set-flags.outputs.toolchain }} ${{inputs.command}} ${{inputs.args}};
+        echo ${{inputs.args}} | xargs ${{ steps.set-flags.outputs.invoker }} ${{ steps.set-flags.outputs.toolchain }} ${{inputs.command}};
