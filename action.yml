@@ -47,7 +47,7 @@ runs:
       shell: bash
       run: |
         # Assign inputs to variables if needed
-        if [[ -n "${{inputs.use-cross}}" || "${{inputs.use-cross}}" != "true" ]]; then
+        if [[ -z "${{inputs.use-cross}}" || "${{inputs.use-cross}}" != "true" ]]; then
           echo "Using cargo"
           echo "invoker=cargo" >> $GITHUB_OUTPUT;
         else
