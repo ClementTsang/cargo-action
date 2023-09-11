@@ -27,8 +27,11 @@ inputs:
 
   cross-version:
     description: >
-      The cross version to use. Only used if `use-cross` is enabled. If not set, defaults to the newest stable
-      version of cross.
+      The cross version to use. This is only used if `use-cross` is enabled. If it is not set, defaults to the newest
+      stable version of cross.
+
+      You can also set the special versions of "main" or "git:xyz" to specify a specific git hash or the current main
+      branch head of cross.
     required: false
     default: ""
 
@@ -63,9 +66,17 @@ runs:
       run: |
         # Install cross
         if [[ -n "${{inputs.cross-version}}" ]]; then
-          CROSS_VERSION_ARG="--version=${{inputs.cross-version}}";
+          if [[ "${{inputs.cross-version}}" == "main" ]]; then
+            cargo install cross --git https://github.com/cross-rs/cross --branch main
+          elif [[ "${{inputs.cross-version}}" == "git:"* ]]; then
+            CROSS_VERSION_ARG="${{inputs.cross-version}}"
+            CROSS_HASH="${CROSS_VERSION_ARG:4}"
+            cargo install cross --git https://github.com/cross-rs/cross --rev ${CROSS_HASH}
+          else
+            CROSS_VERSION_ARG="--version=${{inputs.cross-version}}";
+            cargo install cross --locked ${CROSS_VERSION_ARG};
+          fi
         fi
-        cargo install cross --locked ${CROSS_VERSION_ARG};
 
     - name: Execute the cargo/cross command.
       shell: bash
