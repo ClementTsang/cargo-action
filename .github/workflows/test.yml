@@ -126,3 +126,45 @@ jobs:
         run: |
           [[ -d "test/hello_world/target/aarch64-unknown-linux-gnu/debug" ]] || (echo "debug is missing" && exit 1);
           [[ -d "test/hello_world/target/aarch64-unknown-linux-gnu/release" ]] || (echo "release is missing" && exit 1);
+
+  test-git-cross:
+    name: "Test using git versions of cross"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+          target: aarch64-unknown-linux-gnu
+
+      - name: Enable Rust cache
+        uses: Swatinem/rust-cache@6fd3edff6979b79f87531400ad694fb7f2c84b1f # 2.2.1
+        with:
+          cache-on-failure: true
+          workspaces: "./test/hello_world -> target"
+
+      - name: Test main branch
+        uses: ./
+        with:
+          command: build
+          args: --target aarch64-unknown-linux-gnu
+          use-cross: true
+          cross-version: main
+          directory: test/hello_world
+
+      - name: Uninstall cargo cross
+        shell: bash
+        run: |
+          cargo uninstall cross || true
+
+      - name: Test git hash
+        uses: ./
+        with:
+          command: build
+          args: --target aarch64-unknown-linux-gnu
+          use-cross: true
+          cross-version: "git:d6511b7b166c18640f81b8f6a74d9eef380f7ded"
+          directory: test/hello_world

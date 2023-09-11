@@ -13,14 +13,14 @@ Note - this action does not install Rust for you, you will want to install a too
 
 **Note: Inputs aren't necessarily checked to be valid by this action!**
 
-| Name            | Description                                                                                                                 |
-| --------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `command`       | The `cargo` command to run (e.g. `build`, `test`). Required.                                                                |
-| `toolchain`     | The toolchain to use. Do not include the `+` sign (e.g. `nightly`, `beta`). Defaults to stable.                             |
-| `args`          | What arguments to pass to the cargo/cross command.                                                                          |
-| `use-cross`     | Whether to use cross instead of using cargo. If enabled, cross will automatically be installed if needed.                   |
-| `cross-version` | The cross version to use. Only used if `use-cross` is enabled. If not set, defaults to the newest stable version of cross.  |
-| `directory`     | Change to the specified directory prior to execution. Useful if your repo's base folder does not contain your Rust project. |
+| Name            | Description                                                                                                                                                                           |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `command`       | The `cargo` command to run (e.g. `build`, `test`). Required.                                                                                                                          |
+| `toolchain`     | The toolchain to use. Do not include the `+` sign (e.g. `nightly`, `beta`). Defaults to stable.                                                                                       |
+| `args`          | What arguments to pass to the cargo/cross command.                                                                                                                                    |
+| `use-cross`     | Whether to use cross instead of using cargo. If enabled, cross will automatically be installed if needed.                                                                             |
+| `cross-version` | The cross version to use. Only used if `use-cross` is enabled. If this is not set, it will default to the newest stable version of cross. `main` or `git:XYZ` are also valid options. |
+| `directory`     | Change to the specified directory prior to execution. Useful if your repo's base folder does not contain your Rust project.                                                           |
 
 ## Example
 
