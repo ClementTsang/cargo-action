@@ -127,6 +127,14 @@ jobs:
           [[ -d "test/hello_world/target/aarch64-unknown-linux-gnu/debug" ]] || (echo "debug is missing" && exit 1);
           [[ -d "test/hello_world/target/aarch64-unknown-linux-gnu/release" ]] || (echo "release is missing" && exit 1);
 
+      - name: Test unspecified verison
+        uses: ./
+        with:
+          command: build
+          args: --target aarch64-unknown-linux-gnu
+          use-cross: true
+          directory: test/hello_world
+
   test-git-cross:
     name: "Test using git versions of cross"
     runs-on: ubuntu-latest
