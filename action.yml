@@ -76,6 +76,9 @@ runs:
             CROSS_VERSION_ARG="--version=${{inputs.cross-version}}";
             cargo install cross --locked ${CROSS_VERSION_ARG};
           fi
+        else
+          # Install whatever is the latest version.
+          cargo install cross --locked
         fi
 
     - name: Execute the cargo/cross command.
