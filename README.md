@@ -1,6 +1,6 @@
 # cargo-action
 
-A simple GitHub Action to invoke cargo/cross and commands. Inputs and usage inspired by action-rs' [cargo action](https://github.com/actions-rs/cargo),
+A simple GitHub Action to invoke cargo/cross. Inputs and usage inspired by action-rs' [cargo action](https://github.com/actions-rs/cargo),
 with dtolnay's [rust-toolchain](https://github.com/dtolnay/rust-toolchain) as reference.
 
 Written for use in personal projects (i.e. [bottom](https://github.com/ClementTsang/bottom)), though feel free to use it on your own. Obligatory disclaimer that it may or may not work for your use case though - I'm open to issue reports and PRs however!
