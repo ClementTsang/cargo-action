@@ -138,6 +138,18 @@ jobs:
   test-git-cross:
     name: "Test using git versions of cross"
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        settings:
+          - { cross-version: "main", repository-url: "" }
+          - {
+              cross-version: "git:baf457efc2555225af47963475bd70e8d2f5993f",
+              repository-url: "",
+            }
+          - {
+              cross-version: "git:baf457efc2555225af47963475bd70e8d2f5993f",
+              repository-url: "https://github.com/cross-rs/cross",
+            }
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -154,40 +166,12 @@ jobs:
           cache-on-failure: true
           workspaces: "./test/hello_world -> target"
 
-      - name: Test main branch
+      - name: Test
         uses: ./
         with:
           command: build
           args: --target aarch64-unknown-linux-gnu
           use-cross: true
-          cross-version: main
+          cross-version: ${{ matrix.settings.cross-version }}
           directory: test/hello_world
-
-      - name: Uninstall cargo cross
-        shell: bash
-        run: |
-          cargo uninstall cross || true
-
-      - name: Test git hash
-        uses: ./
-        with:
-          command: build
-          args: --target aarch64-unknown-linux-gnu
-          use-cross: true
-          cross-version: "git:baf457efc2555225af47963475bd70e8d2f5993f"
-          directory: test/hello_world
-
-      - name: Uninstall cargo cross
-        shell: bash
-        run: |
-          cargo uninstall cross || true
-
-      - name: Test setting repo
-        uses: ./
-        with:
-          command: build
-          args: --target aarch64-unknown-linux-gnu
-          use-cross: true
-          cross-version: "git:baf457efc2555225af47963475bd70e8d2f5993f"
-          directory: test/hello_world
-          repository-url: "https://github.com/cross-rs/cross"
+          repository-url: ${{ matrix.settings.repository-url }}
