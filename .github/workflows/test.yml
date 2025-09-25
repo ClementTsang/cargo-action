@@ -174,5 +174,20 @@ jobs:
           command: build
           args: --target aarch64-unknown-linux-gnu
           use-cross: true
-          cross-version: "git:d6511b7b166c18640f81b8f6a74d9eef380f7ded"
+          cross-version: "git:baf457efc2555225af47963475bd70e8d2f5993f"
           directory: test/hello_world
+
+      - name: Uninstall cargo cross
+        shell: bash
+        run: |
+          cargo uninstall cross || true
+
+      - name: Test setting repo
+        uses: ./
+        with:
+          command: build
+          args: --target aarch64-unknown-linux-gnu
+          use-cross: true
+          cross-version: "git:baf457efc2555225af47963475bd70e8d2f5993f"
+          directory: test/hello_world
+          repository-url: "https://github.com/cross-rs/cross"
