@@ -73,7 +73,7 @@ runs:
         if [[ -n "${{inputs.cross-version}}" ]]; then
           if [[ "${{inputs.cross-version}}" == "main" ]]; then
             if [[ -n "${{inputs.repository-url}}" ]]; then
-              cargo install cross --git "${{input.repository-url}}"
+              cargo install cross --git "${{inputs.repository-url}}"
             else
               cargo install cross --git https://github.com/cross-rs/cross --branch main
             fi
